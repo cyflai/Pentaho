@@ -1,0 +1,30 @@
+---
+- hosts: all
+   
+  tasks: 
+  
+  - name: Create new users "pentaho"
+    user:
+     name: pentaho
+     comment: "pentaho user"
+     password: "{{  'pentaho' | password_hash('sha512') }}"
+
+  - name: Download Pentaho files
+    get_url:
+     #url: http://gitlab.hds-cloudconnect.com:8008/pentaho-business-analytics-7.1.0.0-12-x64.bin
+     url: http://10.16.99.13:8008/pentaho-business-analytics-7.1.0.0-12-x64.bin
+     dest: /home/pentaho
+
+  - name: Change file owner and permission
+    file: path=/home/pentaho/pentaho-business-analytics-7.1.0.0-12-x64.bin state=file mode="a+x" owner=pentaho group=pentaho
+
+  - name: Enable port 8080 on firewall
+    firewalld:
+     port: 8080/tcp
+     permanent: true
+     state: enabled
+  
+  #- name: Install Pentaho
+  #  command: "/home/pentaho/pentaho-business-analytics-7.1.0.0-12-x64.bin --mode unattended --postgres_password pentaho"
+  #  become: true
+  #  become_user: pentaho
