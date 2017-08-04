@@ -31,4 +31,4 @@
     become_user: pentaho
 
   - name: Restart Pentaho Service
-    command: "/home/pentaho/Pentaho/ctlscript.sh restart"
+    shell: "/home/pentaho/Pentaho/ctlscript.sh restart"
