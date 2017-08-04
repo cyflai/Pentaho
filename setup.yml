@@ -30,7 +30,11 @@
     become: true
     become_user: pentaho
 
-  - name: Restart Pentaho Service
-    shell: "/home/pentaho/Pentaho/ctlscript.sh stop; /home/pentaho/Pentaho/ctlscript.sh start"
-    become: true
-    become_user: pentaho
+  - name: Start Pentaho Service on boot
+    shell: "echo @reboot /home/pentaho/Pentaho/ctlscript.sh start >> /var/spool/cron/pentaho"
+
+  - name: Restart server
+    command: /sbin/shutdown -r -t now
+    async: 0
+    poll: 0
+    ignore_errors: true
