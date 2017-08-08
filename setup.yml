@@ -52,11 +52,13 @@
     
   - name: Start Pentaho Service on boot
     shell: "echo @reboot /home/pentaho/Pentaho/ctlscript.sh start >> /var/spool/cron/pentaho"
+  
+  - name: install x windows
+    shell: yum groupinstall "X Window System" -y
 
   - name: install gnome x windows
     yum: state=latest name={{ item }} update_cache=yes
     with_items:
-     - "@X Window System"
      - "gnome-classic-session"
      - "gnome-terminal"
      - "control-center"
