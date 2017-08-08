@@ -4,7 +4,8 @@
   tasks: 
   
   - set_fact:
-    pentaho_host: "{{ ansible_ssh_host }}"
+     pentaho_host: "{{ ansible_ssh_host }}"
+    run_once: yes
  
   - name: Create new users "pentaho"
     user:
