@@ -16,7 +16,7 @@
      key: "{{ lookup('file', '../files/clai-id-rsa.pub') }}"
   
   - file:
-     path: '/ansible_home/files/clai-id-rsa'
+     path: '../files/clai-id-rsa'
      mode: 0400
     connection: local
 
@@ -43,8 +43,9 @@
   #  become_user: pentaho
   
   - name: install Pentaho
-    local_action: command ssh -i files/clai-id-rsa pentaho@{{ ansible_ssh_host }} '/home/pentaho/pentaho-business-analytics-7.1.0.0-12-x64.bin --mode unattended --postgres_password pentaho'
-  
+    command: ssh -i files/clai-id-rsa pentaho@{{ ansible_ssh_host }} '/home/pentaho/pentaho-business-analytics-7.1.0.0-12-x64.bin --mode unattended --postgres_password pentaho'
+    delegate_to: 127.0.0.1
+    
   - name: Start Pentaho Service on boot
     shell: "echo @reboot /home/pentaho/Pentaho/ctlscript.sh start >> /var/spool/cron/pentaho"
 
