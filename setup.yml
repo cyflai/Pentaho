@@ -8,6 +8,12 @@
      name: pentaho
      comment: "pentaho user"
      password: "{{  'pentaho' | password_hash('sha512') }}"
+     
+  - name: Set authorized key took from file
+    authorized_key:
+     user: pentaho
+     state: present
+     key: "{{ lookup('file', '../files/clai-id-rsa.pub') }}"
 
   - name: Download Pentaho files
     get_url:
@@ -26,11 +32,14 @@
      immediate: yes
     ignore_errors: true
   
-  - name: Install Pentaho
-    command: "/home/pentaho/pentaho-business-analytics-7.1.0.0-12-x64.bin --mode unattended --postgres_password pentaho"
-    become: true
-    become_user: pentaho
-    
+  #- name: Install Pentaho
+  #  command: "/home/pentaho/pentaho-business-analytics-7.1.0.0-12-x64.bin --mode unattended --postgres_password pentaho"
+  #  become: true
+  #  become_user: pentaho
+  
+  - name: install Pentaho
+    local_action: command ssh pentaho@{{ ansible_ssh_host }} '/home/pentaho/pentaho-business-analytics-7.1.0.0-12-x64.bin --mode unattended --postgres_password pentaho'
+  
   - name: Start Pentaho Service on boot
     shell: "echo @reboot /home/pentaho/Pentaho/ctlscript.sh start >> /var/spool/cron/pentaho"
 
