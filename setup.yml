@@ -47,8 +47,8 @@
    
   - name: reboot
     command: /sbin/shutdown -r -t now
-     async: 0
-     poll: 0
+    async: 0
+    poll: 0
     ignore_errors: true
 
   - name: Restarting the server ...
