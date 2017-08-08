@@ -34,8 +34,8 @@
     shell: "echo @reboot /home/pentaho/Pentaho/ctlscript.sh start >> /var/spool/cron/pentaho"
 
   - name: install gnome x windows
-     yum: state=latest name={{ item }} update_cache=yes
-     with_items:
+    yum: state=latest name={{ item }} update_cache=yes
+    with_items:
      - "@X Window System"
      - "gnome-classic-session"
      - "gnome-terminal"
@@ -43,10 +43,10 @@
      - "liberation-mono-fonts"
      
   - name: unlink
-     shell: "unlink /etc/systemd/system/default.target & ln -sf /lib/systemd/system/graphical.target /etc/systemd/system/default.target"
+    shell: "unlink /etc/systemd/system/default.target & ln -sf /lib/systemd/system/graphical.target /etc/systemd/system/default.target"
    
   - name: reboot
-     command: /sbin/shutdown -r -t now
+    command: /sbin/shutdown -r -t now
      async: 0
      poll: 0
      ignore_errors: true
