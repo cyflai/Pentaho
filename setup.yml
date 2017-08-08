@@ -33,8 +33,28 @@
   - name: Start Pentaho Service on boot
     shell: "echo @reboot /home/pentaho/Pentaho/ctlscript.sh start >> /var/spool/cron/pentaho"
 
-  - name: Restart server
-    command: /sbin/shutdown -r -t now
-    async: 0
-    poll: 0
-    ignore_errors: true
+  - name: install gnome x windows
+     yum: state=latest name={{ item }} update_cache=yes
+     with_items:
+     - "@X Window System"
+     - "gnome-classic-session"
+     - "gnome-terminal"
+     - "control-center"
+     - "liberation-mono-fonts"
+     
+  - name: unlink
+     shell: "unlink /etc/systemd/system/default.target & ln -sf /lib/systemd/system/graphical.target /etc/systemd/system/default.target"
+   
+  - name: reboot
+     command: /sbin/shutdown -r -t now
+     async: 0
+     poll: 0
+     ignore_errors: true
+
+  - name: Restarting the server ...
+    wait_for:
+      port: 22
+      host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
+      search_regex: OpenSSH
+      delay: 10
+    connection: local
