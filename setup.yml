@@ -16,8 +16,8 @@
      key: "{{ lookup('file', '../files/clai-id-rsa.pub') }}"
   
   - file:
-    path: ../files/clai-id-rsa
-    mode: 0400
+     path: ../files/clai-id-rsa
+     mode: 0400
 
   - name: Download Pentaho files
     get_url:
