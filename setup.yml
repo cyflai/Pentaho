@@ -3,6 +3,9 @@
    
   tasks: 
   
+  - set_fact:
+    pentaho_host: {{ ansible_ssh_host }}
+ 
   - name: Create new users "pentaho"
     user:
      name: pentaho
@@ -43,7 +46,7 @@
   #  become_user: pentaho
   
   - name: install Pentaho
-    command: ssh -i files/clai-id-rsa pentaho@{{ ansible_ssh_host }} '/home/pentaho/pentaho-business-analytics-7.1.0.0-12-x64.bin --mode unattended --postgres_password pentaho'
+    command: ssh -i files/clai-id-rsa pentaho@{{ pentaho_host }} '/home/pentaho/pentaho-business-analytics-7.1.0.0-12-x64.bin --mode unattended --postgres_password pentaho'
     delegate_to: 127.0.0.1
     
   - name: Start Pentaho Service on boot
