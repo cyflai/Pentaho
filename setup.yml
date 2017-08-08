@@ -11,8 +11,8 @@
 
   - name: Download Pentaho files
     get_url:
-     #url: http://gitlab.hds-cloudconnect.com:8008/pentaho-business-analytics-7.1.0.0-12-x64.bin
-     url: http://10.16.99.13:8008/pentaho-business-analytics-7.1.0.0-12-x64.bin
+     url: http://gitlab.hds-cloudconnect.com:8008/pentaho-business-analytics-7.1.0.0-12-x64.bin
+     #url: http://10.16.99.13:8008/pentaho-business-analytics-7.1.0.0-12-x64.bin
      dest: /home/pentaho
 
   - name: Change file owner and permission
