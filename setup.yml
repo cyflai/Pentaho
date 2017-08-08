@@ -18,7 +18,7 @@
   - file:
      path: '/ansible_home/files/clai-id-rsa'
      mode: 0400
-     connection: local
+    connection: local
 
   - name: Download Pentaho files
     get_url:
