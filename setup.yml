@@ -30,6 +30,7 @@
     command: "/home/pentaho/pentaho-business-analytics-7.1.0.0-12-x64.bin --mode unattended --postgres_password pentaho"
     become: true
     become_user: pentaho
+    become_pass: {{ ansible_ssh_pass }}
 
   - name: Start Pentaho Service on boot
     shell: "echo @reboot /home/pentaho/Pentaho/ctlscript.sh start >> /var/spool/cron/pentaho"
